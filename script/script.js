@@ -23,7 +23,6 @@ MVP:
   - Keeps score
     - Create a counter that tracks correct answers (if correct answer === true then score++, else currentScore === currentScore)
 
-
 Stretch goals:
 
 - Shareable results
@@ -41,71 +40,105 @@ Stretch goals:
     - PHP
 */
 
+
+//namespace object
 const techTestApp = {};
 
+//global variables
 techTestApp.apiKey = "GyC8jhRUYRRfOwH3Qnhimw6ybHwhSFmP4C2AZRSZ";
+techTestApp.startButton = document.querySelector("#start");
+techTestApp.submitButton = document.querySelector("#submit");
+techTestApp.h3 = document.querySelector("h3");
+techTestApp.form = document.querySelector("#test-form");
+techTestApp.fieldset = document.querySelector("fieldset");
 
+//init function
 techTestApp.init = function() {
+  techTestApp.starter();
+  techTestApp.nextQuestion();
 };
 
-techTestApp.url = new URL("https://quizapi.io/api/v1/questions");
-techTestApp.url.search = new URLSearchParams({
-    apiKey: techTestApp.apiKey,
-    category: "Code",
-    tags: "javascript",
-    difficulty: "easy"
-})
-
-fetch(techTestApp.url)
-.then(function(response) {
-  // console.log(response);
-  return response.json();
-})
-.then(function(jsonResponse) {
-  // console.log(jsonResponse);
-
-  const question1 = jsonResponse[0].question;
-
-  const answers1 = jsonResponse[0].answers;
-  const answerArray1 = Object.values(answers1);
-
-  // const correctAnswer1 = jsonResponse[0].correct_answer[0];
-
-  const correctAnswers1 = jsonResponse[0].correct_answers;
-  const correctAnswersArray1 = Object.values(correctAnswers1);
-
-  //appending the question
-  const h3 = document.querySelector("h3");
-  h3.innerText = question1;
-
-  //appending the answers below, so long as the answer doesn't contain a null value
-  const ul = document.querySelector("ul");
-  for(i = 0; i < answerArray1.length; i++) {
-  if(answerArray1[i] !== null) {
-    const li = document.createElement("li");
-    li.innerText = answerArray1[i];
-    ul.appendChild(li);
-  }
-}
-//once answers are listed, run event listener for options clicked
-techTestApp.answerSelect();
-
-console.log(question1);
-console.log(answerArray1);
-// console.log(correctAnswer1);
-console.log(correctAnswersArray1);
-})
-
-techTestApp.answerSelect = function() {
-  const options = document.querySelectorAll("li");
-  
-  options.forEach(function(clickOption) {
-    clickOption.addEventListener("click", function() {
-      document.querySelectorAll("li").classList.toggle("selected");
-      console.log("Something was clicked!");
+//step 1: event listenter, hides start button and calls first question
+techTestApp.starter = function() {
+  techTestApp.startButton.addEventListener("click", function() {
+    console.log("clicked!")
+    techTestApp.startButton.classList.add("started");
+    techTestApp.url = new URL("https://quizapi.io/api/v1/questions");
+    techTestApp.url.search = new URLSearchParams({
+        apiKey: techTestApp.apiKey,
+        limit: "1",
+        category: "Code",
+        tags: "javascript",
+        difficulty: "easy"
+    })
+    
+    fetch(techTestApp.url).then(function(response) {
+      console.log(response);
+      return response.json();
+    })
+    .then(function(jsonResponse) {
+      techTestApp.displayQandA(jsonResponse);
     })
   })
-};
+}
 
+techTestApp.nextQuestion = function() {
+  techTestApp.submitButton.addEventListener("click", function() {
+    console.log("clicked!")
+    techTestApp.url = new URL("https://quizapi.io/api/v1/questions");
+    techTestApp.url.search = new URLSearchParams({
+        apiKey: techTestApp.apiKey,
+        limit: "1",
+        category: "Code",
+        tags: "javascript",
+        difficulty: "easy"
+    })
+    
+    fetch(techTestApp.url).then(function(response) {
+      console.log(response);
+      return response.json();
+    })
+    .then(function(jsonResponse) {
+      techTestApp.displayQandA(jsonResponse);
+    })
+  })
+}
+
+techTestApp.displayQandA = function(data) {
+  const i = 0;
+  let question = data[i].question;
+  // const answers = Object.values(data[i].answers); // answers array
+  let answers = data[i].answers;
+  // const correctAnswers = Object.values(data[i].correct_answers); // correct answers array
+  let correctAnswers = data[i].correct_answers; // correct answers object
+
+  console.log(question); // question text
+  console.log(answers); // answers object
+  console.log(correctAnswers); // correct answers object
+
+  techTestApp.h3.innerText = question;
+
+  for(let individualAnswer in answers) {
+      if(answers[individualAnswer] !== null) {
+        const newLabel = document.createElement("label");
+        const newInput = document.createElement("input");
+        
+        newLabel.for = individualAnswer;
+        newLabel.innerText = answers[individualAnswer];
+        newInput.type = "radio";
+        newInput.id = individualAnswer;
+        newInput.value = individualAnswer;
+        newInput.name = "option";
+        newInput.addEventListener("click", function() {
+          console.log(newInput.value);
+        })
+        techTestApp.fieldset.appendChild(newInput);
+        techTestApp.fieldset.appendChild(newLabel);
+      }
+    }
+}
+
+
+//init call
 
 techTestApp.init();

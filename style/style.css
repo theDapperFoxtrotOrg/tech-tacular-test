@@ -235,6 +235,17 @@ html {
   overflow: hidden;
 }
 
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin: 0 auto;
 html, body {
   font-size: 6.25%;
   font-family: "Roboto Condensed", sans-serif;
@@ -281,6 +292,37 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+h1,
+h2,
+h3,
+p {
+  text-align: center;
+}
+
+form,
+fieldset {
+  margin: 0;
+  width: 100%;
+}
+
+fieldset {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+legend,
+input[type=submit] {
+  margin: 0 auto;
+}
+
+.started {
+  display: none;
   text-align: center;
 }
 
