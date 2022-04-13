@@ -1,6 +1,6 @@
 const techTestApp = {};
 
-techTestApp.apiKey = "GyC8jhRUYRRfOwH3Qnhimw6ybHwhSFmP4C2AZRSZ";
+techTestApp.apiKey = config.myApiToken;
 techTestApp.startButton = document.querySelector("#start");
 techTestApp.nextButton = document.querySelector("#next");
 techTestApp.playAgain = document.querySelector("#playAgain");
