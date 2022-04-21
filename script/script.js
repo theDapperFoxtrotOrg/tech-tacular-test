@@ -1,6 +1,6 @@
 const techTestApp = {};
 
-techTestApp.apiKey = "AUoVzCrhlFCTjFt5WdUUcFKpMFYnMheAAWszg4MI";
+techTestApp.apiKey = "u9hf40l3mkFYJsTfyRN1PauVY4DKGgQiWY9KbpUA";
 techTestApp.startButton = document.querySelector("#start");
 techTestApp.nextButton = document.querySelector("#next");
 techTestApp.playAgain = document.querySelector("#playAgain");

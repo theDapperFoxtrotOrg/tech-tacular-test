@@ -1,3 +1,3 @@
 const config = {
-  myApiToken : "GyC8jhRUYRRfOwH3Qnhimw6ybHwhSFmP4C2AZRSZ",
+  myApiToken : "u9hf40l3mkFYJsTfyRN1PauVY4DKGgQiWY9KbpUA",
 }
